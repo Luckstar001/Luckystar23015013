@@ -1,1 +1,1 @@
-this is my first attemp into programming
+this is my first attemp into programming in python

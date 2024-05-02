@@ -1,0 +1,11 @@
+age = int(input("Please input your age: "))
+gender = input("Please in your gender (please either male/female): ")
+if age >= 18:
+    if gender.lower() == "male":
+        print("You are a man.")
+    elif gender.lower() == "female":
+        print("You are a woman.")
+    else:
+        print("Invalid gender input.")
+else:
+    print("You are a minor.")

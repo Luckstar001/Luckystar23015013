@@ -11,5 +11,3 @@ user_input = input("Enter a sentence or paragraph: ")
 result = count_words(user_input)
 for word, count in result.items():
     print(f"{word}: {count}")
-
-    

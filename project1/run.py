@@ -1,13 +1,3 @@
-'''def remove_duplicates(input_list):
-    unique_elements = []
-    for item in input_list:
-        if item not in unique_elements:
-            unique_elements.append(item)
-    return unique_elements
-user_list = input('please input your listed items: ').split()
-result = remove_duplicates(user_list)
-print('your list is: ', result)'''
-
 """
 Ensure to complete the expected code in hpolyFintech.py before proceeding to this file
 """
@@ -28,11 +18,27 @@ def align_tab(message):
 def register_data():
     data_gen = {}
     align_center("Please Provide the following data correctly")
-    data_gen["username"] = input("\tEnter username$ ")
+    data_gen["username"] = input("\tPls Enter username$ ")
     data_gen["pin"] = pin_validation()
     data_gen["amount"] = amount_validation()
     data_gen["age"] = age_validation()
     user_registration(**data_gen)
+
+def withdrawal_check():
+    info = accountData()
+    for data in info:
+        withdrawal_check = withdrawals(data['account_Number'], data['pin'])
+        align_tab(withdrawal_check)
+        break
+
+def deposit_check():
+    info = accountData()
+    for data in info:
+        username = data['username']
+        pin = data['pin']
+        account_number = check_balance(username,pin)
+        align_tab(account_number)
+        break
 
 
 def pin_validation():
@@ -82,6 +88,11 @@ while True:
 
     if choice.lower() == "r":
         register_data()
+    elif choice.lower() == "w":
+        withdrawal_check()
+    elif choice.lower() == "d":
+        deposit_check()
+
 
         # Study the code above, depending on how you implemented the rest of your features like deposit, withdrawal, etc
         # in hpolyFintech.py, implement other choices to execute the needed functions

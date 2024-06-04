@@ -12,4 +12,4 @@ if result:
     max_num, min_num = result
     print(f"Maximum number is: {max_num}")
     print(f"Minimum number is: {min_num}")
-    print("thank you")
+    print("Thank you")

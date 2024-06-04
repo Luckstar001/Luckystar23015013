@@ -21,12 +21,12 @@ import json
 from json import JSONDecodeError
 from random import randint
 
-
 withdrawal_type = {
     1: "transfer",
     2: "Airtime purchase",
     3: "Data Subscription"
 }
+
 
 def accountData():
     """
@@ -39,6 +39,7 @@ def accountData():
         return data
     except JSONDecodeError:
         return
+
 
 def update_amount(accountNumber, amount, sign):
     """
@@ -55,11 +56,14 @@ def update_amount(accountNumber, amount, sign):
                     content["amount"] += amount
                 elif sign == "-":
                     content["amount"] -= amount
-                with open("accountData.json", "r") as file:
+                with open("accountData.json", "w") as file:
                     json.dump(available_data, file)
                 return content["amount"]
+
+
 def save_amount(accountNumber, amount, sign="+"):
     update_amount(accountNumber, amount, sign)
+
 
 def deduct_amount(accountNumber, amount, sign="-"):
     update_amount(accountNumber, amount, sign)
@@ -78,21 +82,22 @@ def user_registration(*args, **kwargs):
     """
 
     userData = {}
-    username = input('pls enter your username: ')
-    pin = int(input('Pls enter your withdrawl pin: '))
-    age = int(input("Pls enter your age: "))
-    amount = int(input("Pls enter your deposit: "))
-    # collect the data from user and store it to the above defined dictionary,
-    storage = accountData()
-    userData['username'] = username
-    userData['pin'] = pin
-    userData['age'] = age
-    userData['amount'] = amount
-    kwargs.update(userData)
-    return kwargs
+    # username = input("Please enter your username: ")
+    # pin = int(input('Please enter your pin: '))
+    # age = int(input("Please enter your age: "))
+    # amount = int(input("Please enter your deposit: "))
 
+    # Store data in userData dictionary
+    # userData['username'] = username
+    # userData['pin'] = pin
+    # userData["age"] = age
+    # userData['amount'] = amount
+    userData.update(kwargs)
+    # return kwargs
+
+    # collect the data from user and store it to the above defined dictionary,
     """
-    Follow the example used to validate the age below for the above requirement
+     Follow the example used to validate the age below for the above requirement
     """
 
     if kwargs["age"] < 18:
@@ -106,6 +111,7 @@ def user_registration(*args, **kwargs):
 
     with open("accountData.json", "w") as file:
         json.dump(initialData, file)
+
 
 def generateAccountNumber():
     """
@@ -122,6 +128,7 @@ def generateAccountNumber():
         else:
             return accountNumber
 
+
 def deposit(username, accountNumber):
     """
     Update the user account number and print its current balance
@@ -129,24 +136,32 @@ def deposit(username, accountNumber):
     :param accountNumber:
     :return: int
     """
-    dashboard = accountData()
-    for check in dashboard:
-        if check["username"] == username and check["accountNumber"] == accountNumber:
-            deposit_amount = int(input("\tPls enter an amount: "))
-            new_Balance = deposit_amount + check["amount"]
-            return f'\t\t\t {new_Balance}\ndeposit alert: \n Hello {check["username"]}, your account has been credited with {deposit_amount},\n your new account balance is {new_Balance}'
+    data = accountData()
+    for items in data:
+        if accountNumber == items['accountNumber'] and username == items["username"]:
+            depo_amount = int(input("\tPlease enter your desired deposit amount: "))
+            if depo_amount >= 1000:
+                new_Amount = items["amount"] + depo_amount
+                save_amount(items["username"], items["accountNumber"], "+")
+                return f'deposit alert: \nHello {username},your account has been credited with  {depo_amount}\n your new account balance is {new_Amount}'
+            else:
+                return f' pls deposit must be 1000 and above'
         else:
-            print(f'Invalid account number')
+            return f" Invalid Account details"
 
     # confirm if the username and accountNumber passed to this function exists in accountData() defined above
     ## if it exist, ask user to enter an amount else return Invalid Account details
     ### using the new amount, add to the user existing record and print the balance to the user
     #### return a message for the user exactly as seen below
-    """
-    deposit alert:
-    Hello username, your account has be credited with {deposit amount},
-    Your new account balance is {account balance}
-    """
+
+
+"""
+     deposit alert:
+     Hello username, your account has be credited with {deposit amount},
+     Your new account balance is {account balance}
+  
+  """
+
 
 def get_account_number(username, pin):
     """
@@ -155,15 +170,15 @@ def get_account_number(username, pin):
     :param pin:
     :return:
     """
-    dashboard = accountData()
-    username = input("Pls enter your username: ")
-    pin = int(input("Pls enter your pin: "))
-    for valid in dashboard:
-        if username == valid["username"] and pin == valid["pin"]:
-            return 'Hello username:\n Your account number is {valid["accountNumber"]}'
+    drone = accountData()
+    username = input('Pls enter your username ')
+    pin = int(input('Pls enter your pin '))
+    for item in drone:
+        if username == item["username"] and pin == item["pin"]:
+            return 'Hello {item["username"]}: \n your account number is {item["accountNumber"]}'
             break
         else:
-            return 'Invalid credentials'
+            return f'Invalid credential'
 
     # This is a simple function, get username and pin from user, if they match what we have in the json file,
     # return user account number with the message
@@ -172,6 +187,7 @@ def get_account_number(username, pin):
     Your account number is {account Number}
     """
 
+
 def check_balance(username, pin):
     """
     Define a function to return user balance to the user
@@ -179,15 +195,15 @@ def check_balance(username, pin):
     :param pin:
     :return: float
     """
-    dashboard = accountData()
-    username = input("Pls enter your username: ")
-    pin = int(input("Pls enter your pin: "))
-    for valid in dashboard:
-        if username == valid["username"] and pin == valid["pin"]:
-            return f'Hello username:\n Your account balance is {valid["amount"]}'
+    drone = accountData()
+    username = input('\tPls enter your username ')
+    pin = int(input('\tPls enter your pin '))
+    for item in drone:
+        if username == item["username"] and pin == item["pin"]:
+            return f'Hello {item["username"]}: \n\tyour account balance is {item["amount"]}'
             break
         else:
-            return 'Invalid credentials'
+            return f'Invalid credential'
 
     # This is a simple function, get username and pin from user, if they match what we have in the json file,
     # return user account balance with the message
@@ -196,6 +212,7 @@ def check_balance(username, pin):
     Your account balance is {account balance}
     """
 
+
 def withdrawals(accountNumber, pin):
     """
     Define a means to withdraw funds either by transfer, purchase airtime or data subscription
@@ -203,53 +220,43 @@ def withdrawals(accountNumber, pin):
     :param pin:
     :return:
     """
-    info = accountData()
-    for valid in info:
-        if accountNumber == valid['accountNumber'] and pin == valid["pin"]:
-            point = 8
-            while point > 0:
-                return '\t{withdrawal_type}'
-                user = input("\tPlease enter a choice above: ")
-                if user > "3":  # Change to int(user) > 3
-                    return "Invalid option, please try again"
-                elif user == "1":
-                    acc_num = input("\tPlease enter your account number: ")
-                    if len(acc_num) == 11:  # Removed unnecessary str() conversion
-                        withdraw_amount = float(input(
-                            "\tPlease enter the amount you want to withdraw: "))  # Convert to float for calculations
-                        if withdraw_amount > valid['amount']:  # Check if withdraw_amount exceeds account balance
-                            return "Insufficient funds"
-                        else:
-                            valid['amount'] -= withdraw_amount  # Deduct withdraw_amount from account balance
-                            return("Transaction Successful!")
-                            return(f"Hello {valid['username']}:")
-                            return(f"You have successfully withdrawn {withdraw_amount} from your account.")
-                            return(f"Your current balance is {valid['amount']}")
-                            break
 
-                    else:
-                        return("Invalid account number. Please enter a 10-digit account number.")
-                elif user == "2":
-                    return(f'service not available at the moment')
-                    break
-                elif user == "3":
-                    return(f" service not available at the moment ")
-                    break
+    data = accountData()
+    for item in data:
+        if str(accountNumber) == str(item['accountNumber']) and str(pin) == str(item['pin']):
+            print(str(withdrawal_type).center(100))
+            attempt = 10
+            while attempt > 0:
+                choice = int(input("\tPls enter an option you would like to perform?: "))
+                if choice == 1:
+                    choice_Num = input("\tPlease enter your account number: ")
+                    if len(choice_Num) == 10:
+                        collect = int(input("\tPlease enter your collect amount: "))
+                        pick = item['amount']
+                        if collect < pick:
+                            pick -= collect
+                            # new_Balance = point
+                            alert = f'Success transaction \nHello {item["username"]}: \nYou have sucessfully transferred {collect} to {item["accountNumber"]} \nYour current balance is {pick}'
+                            return alert
+                        break
 
-                point -= 1  # Decrement point to avoid infinite loop
+                elif choice == 2:
+                    return 'Airtime Service not available at the moment '
+                    break
+                elif choice == 3:
+                    return 'Data subscription not available at the moment '
+                    break
+                else:
+                    attempt -= 1
 
     # validate if accountNumber and pin exist, if yes, define an input to get withdrawal type
     # refer to the withdrawal_type above for its content
     ## if a user pass an integer higher or lesser than the defined keys, return Invalid option and allow multiple trials
-
     ### if user selection is 1, ask for recipient account number, validate to ensure its 10 digits else return
     ### invalid account information, at the moment we wont be looking at bankName until next project
-
     #### if account number is validated, collect amount to be tranferred,
-
     ##### validate if user account balance is up to the transferred amount, if yes, return successful transaction
     ##### and deduct amount from user account balance, hence return the following message
-
     """
     Hello username:
     You have successfully transferred {transfer amount} to {recepient accountNumber}
@@ -267,4 +274,3 @@ def withdrawals(accountNumber, pin):
     
     Reach out to me if you need further clarity or encounter any challenge.
     """
-

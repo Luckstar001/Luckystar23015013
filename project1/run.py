@@ -27,7 +27,7 @@ def register_data():
 def withdrawal_check():
     info = accountData()
     for data in info:
-        withdrawal_check = withdrawals(data['account_Number'], data['pin'])
+        withdrawal_check = withdrawals(data['accountNumber'], data['pin'])
         align_tab(withdrawal_check)
         break
 
@@ -35,9 +35,27 @@ def deposit_check():
     info = accountData()
     for data in info:
         username = data['username']
+        accountNumber = data['accountNumber']
+        depositing = deposit(username, accountNumber)
+        align_tab(depositing)
+        break
+
+def checking_balance():
+    info = accountData()
+    for data in info:
+        username = data['username']
         pin = data['pin']
-        account_number = check_balance(username,pin)
-        align_tab(account_number)
+        checks = check_balance(username, pin)
+        align_tab(checks)
+        break
+
+def bal_messages():
+    info = accountData()
+    for data in info:
+        username = data["username"]
+        pin = data["pin"]
+        checks = check_balance(username, pin)
+        align_tab(checks)
         break
 
 
@@ -92,6 +110,10 @@ while True:
         withdrawal_check()
     elif choice.lower() == "d":
         deposit_check()
+    elif choice.lower() == "c":
+        checking_balance()
+    elif choice.lower() == "b":
+        bal_messages()
 
 
         # Study the code above, depending on how you implemented the rest of your features like deposit, withdrawal, etc
@@ -99,9 +121,5 @@ while True:
         # Ensure to use align_tab to print all text returned from your called functions if the text is aligned to
         # the left, or use align_center if the text is aligned to the center or use print function only
         # where it is crucial and necessary if any
-
-    elif choice.lower() == "exit":
-        print()
-        align_center("GOOD BYE")
         print("*" * 100)
         break

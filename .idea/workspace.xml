@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9e18e303-7e42-42ea-a1f0-6a86b7576bc1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data Structure/Find_max_min.py" beforeDir="false" afterPath="$PROJECT_DIR$/Data Structure/Find_max_min.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data Structure/Remove_duplicate.py" beforeDir="false" afterPath="$PROJECT_DIR$/Data Structure/Remove_duplicate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project1/hpolyFintech.py" beforeDir="false" afterPath="$PROJECT_DIR$/project1/hpolyFintech.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project1/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/project1/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -47,4 +47,6 @@ header{
     font-weight: 500;
     margin-left: 40px;
 }
-.navigation .btnlogin-popup:hover{}
+.navigation .btnlogin-popup:hover{
+    background: gainsboro;
+}
